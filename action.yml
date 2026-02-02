@@ -5,18 +5,6 @@ inputs:
     description: "The folder to use as context"
     required: false
     default: "."
-  domain:
-    description: "Domain name"
-    required: true
-  port:
-    description: "Port"
-    required: false
-  private:
-    description: "Private"
-    required: false
-  volume:
-    description: "Volume"
-    required: false
   token:
     description: "GitHub personal access token"
     required: true
@@ -78,10 +66,10 @@ runs:
           --repo 4lejandrito/cloud \
           -f name="${{ steps.get-app-name.outputs.app-name }}" \
           -f image="ghcr.io/$GITHUB_REPOSITORY:${{ github.sha }}" \
-          -f domain="${{ inputs.domain }}" \
-          -f port="${{ inputs.port }}" \
-          -f private="${{ inputs.private }}" \
-          -f volume="${{ inputs.volume }}" \
+          -f domain="$(yq -r '.domain // ""' cloud.yaml)" \
+          -f port="$(yq -r '.port // ""' cloud.yaml)" \
+          -f private="$(yq -r '.private // ""' cloud.yaml)" \
+          -f volume="$(yq -r '.volume // ""' cloud.yaml)" \
           -f source="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
       shell: bash
       env:
