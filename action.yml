@@ -68,6 +68,7 @@ runs:
           -f image="ghcr.io/$GITHUB_REPOSITORY:${{ github.sha }}" \
           -f domain="$(yq -r '.domain // ""' cloud.yaml)" \
           -f port="$(yq -r '.port // ""' cloud.yaml)" \
+          -f port_tcp="$(yq -r '.port_tcp // ""' cloud.yaml)" \
           -f private="$(yq -r '.private // ""' cloud.yaml)" \
           -f volume="$(yq -r '.volume // ""' cloud.yaml)" \
           -f source="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
